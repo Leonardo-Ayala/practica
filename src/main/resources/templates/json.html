@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="#" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#buscarForm").submit(function () {
+                $.ajax({
+                    method:"post",
+                    data:{id:$("#employeeID").val()},
+                    dataType:"json",
+                    url:"https://cxidau9ao4.execute-api.us-east-1.amazonaws.com/prod"
+                }).done(function (data) {
+                    if(data.estado==="ok"){
+                        $("#first_name").val(data.empleado.first_name);
+                        $("#last_name").val(data.empleado.last_name);
+                        $("#email").val(data.empleado.email);
+                        $("#salary").val(data.empleado.salary);
+                        if(data.empleado.manager_id != 0){
+                            $("#manager_id").val(data.empleado.manager_id);
+                        }else{
+                            $("#manager_id").val("sin jefe");
+                        }
+                    }else{
+                        alert(data.msg);
+                    }
+                }).fail(function (error) {
+                    console.log(error);
+                    alert(error.responseJSON.msg);
+                });
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container mx-auto"  style="width: 400px;">
+    <h1>Consulta de empleado HR</h1>
+    <hr />
+    <form class="form-inline mb-3" id="buscarForm">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="employeeID" class="sr-only">ID</label>
+            <input type="text" class="form-control" id="employeeID" placeholder="ID">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+    </form>
+    <h2>Resultado</h2>
+    <hr />
+    <form>
+        <div class="form-group row">
+            <label for="first_name" class="col-sm-4 col-form-label">First name</label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" id="first_name" value="">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="last_name" class="col-sm-4 col-form-label">Last name</label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" id="last_name" value="">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="email" class="col-sm-4 col-form-label">Email</label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" id="email" value="">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="salary" class="col-sm-4 col-form-label">Salary</label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" id="salary" value="">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="manager_id" class="col-sm-4 col-form-label">Manager</label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" id="manager_id" value="">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+
+
+

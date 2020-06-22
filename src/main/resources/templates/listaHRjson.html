@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="#" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#obtenerLista").click(function () {
+                $.ajax({
+                    method: "GET",
+                    dataType: "json",
+                    crossDomain: true,
+                    headers: {"api-key": "EaQibIyUgcoCAyelLnDwUAxR1OX6AH"},
+                    url: "https://3dkvh9wb90.execute-api.us-east-1.amazonaws.com/prod/"
+                }).done(function (data) {
+                    if (data.estado === "ok") {
+                        var listaEmpleados = data.lista;
+                        var contentHtml = "";
+                        $.each(listaEmpleados, function (i, empleado) {
+                            contentHtml += "<tr>";
+                            contentHtml += "<td>" + (i + 1) + "</td>";
+                            contentHtml += "<td>" + empleado.first_name + "</td>";
+                            contentHtml += "<td>" + empleado.last_name + "</td>";
+                            contentHtml += "<td>" + empleado.email + "</td>";
+                            contentHtml += "<td>" + empleado.salary + "</td>";
+
+                            if (empleado.manager_id != 0) {
+                                contentHtml += "<td>" + empleado.manager_id + "</td>";
+                            } else {
+                                contentHtml += "<td>sin jefe</td>";
+                            }
+
+                            contentHtml += "</tr>";
+                        });
+                        $("table tbody").html(contentHtml);
+                    } else {
+                        console.log(data.msg);
+                        alert(data.msg);
+                    }
+                }).fail(function (err) {
+                    var jsonData = err.responseJSON;
+                    console.log(jsonData.msg);
+                    alert(jsonData.msg);
+                });
+            });
+
+
+        });
+    </script>
+</head>
+<body>
+<div class="container mx-auto"  style="width: 800px;">
+    <h1 class="mb-3">Lista de empleados de HR</h1>
+    <button class="btn btn-primary" id="obtenerLista">Obtener empleados</button>
+    <hr />
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Salary</th>
+            <th>Manager</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+
+

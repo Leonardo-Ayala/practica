@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="#" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#obtenerRespuesta").click(function () {
+                //$.ajax({method:"get", url:"https://3kk521ccj6.execute-api.us-east-1.amazonaws.com/prod/ws-sw2-2020-1-ajax/ej1"})
+                $.get("https://3kk521ccj6.execute-api.us-east-1.amazonaws.com/prod/ws-sw2-2020-1-ajax/ej1")
+                    .done(function (msg) {
+                    $("#respuesta").html(msg);
+                }).fail(function (error) {
+                    alert("fallo la app");
+                    console.log("error");
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div>¿Qué es Lorem Ipsum?</div>
+<button id="obtenerRespuesta">Obtener respuesta</button>
+<div id="respuesta"></div>
+</body>
+</html>
+
+

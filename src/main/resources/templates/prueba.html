@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1 id="mih1">Hola mundo</h1>
+    <div id="ocultar">ocultaremos esta cosilla</div>
+    <div class="miclase">texto de prueba</div>
+    <div class="miclase">texto de prueba</div>
+    <div class="miclase">texto de prueba</div>
+    <div class="miclase">texto de prueba</div>
+    <div class="miclase">texto de prueba</div>
+    <button onclick="botonhola()">hola</button>
+    <button onclick="mostrar()">mostrar</button>
+    <button onclick="ocultar()">ocultar</button>
+    <a href="https://www.google.com.pe" onclick="return mostraraviso()">borrar</a>
+    <script>
+        var elemento = document.getElementById("mih1");
+        elemento.innerHTML= "texto de reemplazo";
+        console.log(elemento);
+        var elementos = document.getElementsByClassName("miclase");
+        elementos[2].innerHTML="texto de reemplazo 2";
+        function botonhola() {
+            alert("holi");
+            elementos[3].innerHTML="apretaste el boton";
+        }
+        function mostraraviso() {
+            var respuesta = confirm('estas segurillo');
+            if(respuesta == false){return false;}
+        }
+        var e = document.getElementById("ocultar")
+        function mostrar() {
+            e.style.display="block";
+        }
+        function ocultar() {
+            e.style.display="none";
+        }
+    </script>
+</body>
+
+</html>
